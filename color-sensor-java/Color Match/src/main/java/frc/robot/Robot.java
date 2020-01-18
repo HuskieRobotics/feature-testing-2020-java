@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * This is a simple example to show how the REV Color Sensor V3 can be used to
@@ -71,13 +72,13 @@ public class Robot extends TimedRobot {
      * an object is the more light from the surroundings will bleed into the 
      * measurements and make it difficult to accurately determine its color.
      */
-    Color detectedColor = m_colorSensor.getColor();
+    final Color detectedColor = m_colorSensor.getColor();
 
     /**
      * Run the color match algorithm on our detected color
      */
     String colorString;
-    ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+    final ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
 
     if (match.color == kBlueTarget) {
       colorString = "Blue";
@@ -90,6 +91,37 @@ public class Robot extends TimedRobot {
     } else {
       colorString = "Unknown";
     }
+
+  final String gameData = DriverStation.getInstance().getGameSpecificMessage();
+if(gameData.length() > 0)
+{
+  switch (gameData.charAt(0))
+  {
+    case 'B' :
+      if (colorString != "Red"){
+      }
+      break;
+    case 'G' :
+    if (colorString != "Yellow"){
+    }
+      break;
+    case 'R' :
+    if (colorString != "Blue"){
+    }
+      break;
+    case 'Y' :
+    if (colorString != "Green"){
+    }
+      break;
+    default :
+      //This is corrupt data
+      break;
+  }
+} else {
+  //Code for no data received yet
+}
+
+
 
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the 

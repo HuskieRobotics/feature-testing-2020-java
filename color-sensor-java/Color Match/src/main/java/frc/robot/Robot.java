@@ -15,7 +15,11 @@ import edu.wpi.first.wpilibj.util.Color;
 import com.revrobotics.ColorSensorV3;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorMatch;
+
 import edu.wpi.first.wpilibj.DriverStation;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * This is a simple example to show how the REV Color Sensor V3 can be used to
@@ -28,15 +32,14 @@ public class Robot extends TimedRobot {
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
 
   /**
-   * A Rev Color Sensor V3 object is constructed with an I2C port as a 
-   * parameter. The device will be automatically initialized with default 
-   * parameters.
+   * A Rev Color Sensor V3 object is constructed with an I2C port as a parameter.
+   * The device will be automatically initialized with default parameters.
    */
   private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
 
   /**
-   * A Rev Color Match object is used to register and detect known colors. This can 
-   * be calibrated ahead of time or during operation.
+   * A Rev Color Match object is used to register and detect known colors. This
+   * can be calibrated ahead of time or during operation.
    * 
    * This object uses a simple euclidian distance to estimate the closest match
    * with given confidence range.
@@ -44,8 +47,8 @@ public class Robot extends TimedRobot {
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
   /**
-   * Note: Any example colors should be calibrated as the user needs, these
-   * are here as a basic example.
+   * Note: Any example colors should be calibrated as the user needs, these are
+   * here as a basic example.
    */
   private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -57,20 +60,20 @@ public class Robot extends TimedRobot {
     m_colorMatcher.addColorMatch(kBlueTarget);
     m_colorMatcher.addColorMatch(kGreenTarget);
     m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget);    
+    m_colorMatcher.addColorMatch(kYellowTarget);
   }
 
   @Override
   public void robotPeriodic() {
     /**
-     * The method GetColor() returns a normalized color value from the sensor and can be
-     * useful if outputting the color to an RGB LED or similar. To
-     * read the raw color, use GetRawColor().
+     * The method GetColor() returns a normalized color value from the sensor and
+     * can be useful if outputting the color to an RGB LED or similar. To read the
+     * raw color, use GetRawColor().
      * 
-     * The color sensor works best when within a few inches from an object in
-     * well lit conditions (the built in LED is a big help here!). The farther
-     * an object is the more light from the surroundings will bleed into the 
-     * measurements and make it difficult to accurately determine its color.
+     * The color sensor works best when within a few inches from an object in well
+     * lit conditions (the built in LED is a big help here!). The farther an object
+     * is the more light from the surroundings will bleed into the measurements and
+     * make it difficult to accurately determine its color.
      */
     final Color detectedColor = m_colorSensor.getColor();
 
@@ -91,6 +94,7 @@ public class Robot extends TimedRobot {
     } else {
       colorString = "Unknown";
     }
+    TalonSRX mytalon = new TalonSRX(8);
 
   final String gameData = DriverStation.getInstance().getGameSpecificMessage();
 if(gameData.length() > 0)
@@ -99,18 +103,22 @@ if(gameData.length() > 0)
   {
     case 'B' :
       if (colorString != "Red"){
+        mytalon.set(ControlMode.PercentOutput, 0.3);
       }
       break;
     case 'G' :
     if (colorString != "Yellow"){
+      mytalon.set(ControlMode.PercentOutput, 0.3);
     }
       break;
     case 'R' :
     if (colorString != "Blue"){
+      mytalon.set(ControlMode.PercentOutput, 0.3);
     }
       break;
     case 'Y' :
     if (colorString != "Green"){
+      mytalon.set(ControlMode.PercentOutput, 0.3);
     }
       break;
     default :

@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.XboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.Pigeon;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -22,7 +21,6 @@ import frc.robot.subsystems.Pigeon;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final Pigeon pig = new Pigeon(13);
 
 
 

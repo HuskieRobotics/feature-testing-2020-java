@@ -25,12 +25,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-  final int PRINTOUT_DELAY = 400; // in Milliseconds
-  CANCoder _CANCoder = new CANCoder(12);
+  final int PRINTOUT_DELAY = 200; // in Milliseconds
+  CANCoder _CANCoder = new CANCoder(0);
   CANCoderConfiguration _canCoderConfiguration = new CANCoderConfiguration();
-class Instrument extends Thread{
-  void printValue(double val){
-      System.out.println(val);}
+  class Instrument extends Thread{
+    void printValue(double val, String units, double timestamp){
+      System.out.printf("%20f %-20s @ %f%n", val, units, timestamp);
+    }
+
     public void run(){
       double posValue = _CANCoder.getPosition();
       String posUnits = _CANCoder.getLastUnitString();
@@ -42,19 +44,7 @@ class Instrument extends Thread{
       System.out.println();
       System.out.println();
     }
-    int count = 0;
-  @Override
-  public void robotPeriodic() {
-    if(count++ >= PRINTOUT_DELAY / 10) {
-      count = 0;
-
-    new Instrument().start();
   }
-    if(joy.getRawButton(1)) {
-    _CANCoder.clearStickyFaults();
-  }
-  }
-
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -63,6 +53,19 @@ class Instrument extends Thread{
   public void robotInit() {
     _CANCoder.configAllSettings(_canCoderConfiguration);
   }
+  
+  int count = 0;
+  @Override
+  public void robotPeriodic() {
+    if(count++ >= PRINTOUT_DELAY / 10) {
+      count = 0;
+
+    new Instrument().start();
+  }
+  //if(joy.getRawButton(1)) {
+    //_CANCoder.clearStickyFaults();
+  //}
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -72,12 +75,6 @@ class Instrument extends Thread{
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
-  int count=0;
-  public void robotPeriodic() {
-    if(count++ >=PRINTOUT_DELAY/10){
-      count=0;
-    }
-  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select
@@ -117,4 +114,4 @@ class Instrument extends Thread{
   @Override
   public void testPeriodic() {
   }
-}}
+}

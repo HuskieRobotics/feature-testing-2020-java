@@ -1,0 +1,9 @@
+[
+  {
+    "artifact": "frcJava (in project PigeonIMU_command)",
+    "target": "roborio",
+    "debugfile": "frcJava_roborio.debugconfig",
+    "project": "PigeonIMU_command",
+    "language": "java"
+  }
+]

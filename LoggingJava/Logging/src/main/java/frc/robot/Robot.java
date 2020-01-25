@@ -11,6 +11,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import edu.wpi.first.wpilibj.AnalogInput;
+
+import java.util.Date;
+import java.sql.Timestamp;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -26,6 +30,9 @@ public class Robot extends TimedRobot {
   private File log;
   private FileWriter writer;
   private BufferedWriter bwriter;
+  private AnalogInput analogIn;
+  private Date date;
+  private Timestamp ts;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -33,6 +40,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    AnalogInput analogIn = new AnalogInput(0);
+    Date date = new Date();
     try {
       this.log = new File("/home/lvuser/logfiles/log.txt");
       if(!this.log.exists()) {
@@ -57,7 +66,8 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     try{
-      this.bwriter.write("This is a log file");
+      ts = new Timestamp(date.getTime());
+      this.bwriter.write(ts.toString() + " - " + analogIn.getValue() + "\n");
     }
     catch(IOException e) {
       

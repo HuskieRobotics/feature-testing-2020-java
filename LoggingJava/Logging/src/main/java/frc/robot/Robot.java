@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     AnalogInput analogIn = new AnalogInput(0);
     Date date = new Date();
     try {
-      this.log = new File("/home/lvuser/logfiles/log.txt");
+      this.log = new File("/home/lvuser/logfiles/log1.txt");
       if(!this.log.exists()) {
         this.log.createNewFile();
       }

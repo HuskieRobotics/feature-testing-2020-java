@@ -8,17 +8,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import com.ctre.phoenix.sensors.CANCoder;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 
 
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.DriveStraightTimed;
+//import frc.robot.commands.DriveStraightTimed;
 //import frc.robot.subsystems.DogShifter;
 
 //import edu.wpi.first.wpilibj.Compressor;
@@ -35,16 +35,14 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain; 
   //public static DogShifter dShifter;
   //private Compressor compressor;
+  private Command m_autonomousCommand;
+
+  private RobotContainer m_robotContainer;
   public static OI oi;
   public static DriverStation ds = DriverStation.getInstance();
 
-
-  Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<Command>();
-  CANCoder _coder;
-
-
-
+  
   
   /**
    * This function is run when the robot is first started up and should be
@@ -53,7 +51,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     //Initialize subsystems
-    _coder = new CANCoder(12);
+    //_coder = new CANCoder(12);
     drivetrain = new Drivetrain();
     //dShifter = new DogShifter();
     oi = new OI(); // MAKE SURE TO PUT THIS LAST
@@ -74,6 +72,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
+    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // block in order for anything in the Command-based framework to work.
+    CommandScheduler.getInstance().run();
   }
 
   /**
@@ -87,7 +90,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledPeriodic() {
-    Scheduler.getInstance().run();
+    //Scheduler.getInstance().run();
   }
 
   /**
@@ -103,29 +106,18 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_chooser.setDefaultOption("Drive Straight", new DriveStraightTimed(2));
-    m_chooser.addOption("Do Nothing", null);
-    m_autonomousCommand = m_chooser.getSelected();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /*
-    String autoSelected = SmartDashboard.getString("Auto Selector", "Drive Straight"); 
-    switch(autoSelected) 
-    {
-      case "Do Nothing":
-        break; 
-      case "Drive Straight" : 
-        m_autonomousCommand = new DriveStraightTimed(2);
-        break; 
-      default:
-        m_autonomousCommand = new DriveStraightTimed(2);
-        break; 
-    }
-    */
-     
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+      m_autonomousCommand.schedule();
     }
   }
 
@@ -158,13 +150,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    Scheduler.getInstance().run();
+    //Scheduler.getInstance().run();
     SmartDashboard.putNumber("time remaining", ds.getMatchTime());
     SmartDashboard.putBoolean("operator control", ds.isOperatorControl());
     
     //String s = _coder.getLastError().toString();
    //SmartDashboard.putNumber("pos",_coder.get);
-    SmartDashboard.putNumber("abs",_coder.getAbsolutePosition());
+    //SmartDashboard.putNumber("abs",_coder.getAbsolutePosition());
     //SmartDashboard.putString("error", s);
 
   }

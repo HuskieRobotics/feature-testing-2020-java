@@ -5,7 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import frc.robot.commands.JoystickDrive;
+//import frc.robot.commands.JoystickDrive;
 import frc.robot.Constants.DriveConstants;
 
 
@@ -18,16 +18,17 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.lang.Math;
 
 
-public class Drivetrain extends Subsystem {
+public class Drivetrain extends SubsystemBase {
     
-    private WPI_TalonSRX [] leftMotors = new WPI_TalonSRX [3];
-    private WPI_TalonSRX [] rightMotors = new WPI_TalonSRX [3];
-    private int [] leftCANIDs = {5,7,8};
-    private int [] rightCANIDs = {2,3,4};
+    //private WPI_TalonSRX [] leftMotors = new WPI_TalonSRX [3];
+    //private WPI_TalonSRX [] rightMotors = new WPI_TalonSRX [3];
+    //private int [] leftCANIDs = {5,7,8};
+    //private int [] rightCANIDs = {2,3,4};
 
     private CANCoder rightEncoder = new CANCoder (12);
     private CANCoder leftEncoder = new CANCoder (13);
@@ -53,12 +54,12 @@ public class Drivetrain extends Subsystem {
 
     public Drivetrain() {
         //initialize all motors, set 2,4,6 as inverted, set all motor default mode to brake
-        for (int i = 0; i < 3; i++) {
+        /* for (int i = 0; i < 3; i++) {
             leftMotors[i] = new WPI_TalonSRX(leftCANIDs[i]);
             leftMotors[i].setInverted(true);
             rightMotors[i] = new WPI_TalonSRX(rightCANIDs[i]);
 
-        }
+        } */
 
         resetEncoders();
 
@@ -125,12 +126,13 @@ public class Drivetrain extends Subsystem {
         rightEncoder.setPosition(0);
     }
 
-
+    /*
     public void initDefaultCommand() {
         setDefaultCommand(new JoystickDrive());
     }
+    */
 
-    public void arcadeDrive(double joystickX, double joystickY)
+    /* public void arcadeDrive(double joystickX, double joystickY)
     {
         //Apply raw motor values from joysticks
         double leftPower = joystickX + joystickY;
@@ -147,13 +149,13 @@ public class Drivetrain extends Subsystem {
         //Set power to motors
         setLeftPower(leftPower);
         setRightPower(rightPower);
-    }
-    public void setLeftPower (double power) {
+    } */
+    /* public void setLeftPower (double power) {
         for (WPI_TalonSRX leftMotor : leftMotors)
             leftMotor.set(power);
     }
     public void setRightPower (double power) {
         for (WPI_TalonSRX rightMotor : rightMotors)
             rightMotor.set(power);
-    }
+    } */
 }

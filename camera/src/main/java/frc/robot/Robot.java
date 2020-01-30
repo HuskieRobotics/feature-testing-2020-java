@@ -21,14 +21,23 @@ import edu.wpi.first.wpilibj.CameraServer;
  * project.
  */
 public class Robot extends TimedRobot {
-
+  CameraServer camera1;
+  CameraServer camera2;
+  CameraServer camera3;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance().startAutomaticCapture();
+    camera1 = CameraServer.getInstance();
+    camera2 = CameraServer.getInstance();
+    camera3 = CameraServer.getInstance();
+    camera1.startAutomaticCapture(0);
+    camera2.startAutomaticCapture(1);
+    camera3.startAutomaticCapture(2);
+    // url to find more stuff on cameras:
+    // https://www.chiefdelphi.com/t/the-definitive-how-to-switch-multiple-cameras-thread/157679/2
   }
 
   /**

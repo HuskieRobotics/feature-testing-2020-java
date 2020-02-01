@@ -16,14 +16,14 @@ public final class Constants {
         public static final DifferentialDriveKinematics kDriveKinematics =
             new DifferentialDriveKinematics(kTrackwidthMeters);
 
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+        public static final double kMaxSpeedMetersPerSecond = .2;
+        public static final double kMaxAccelerationMetersPerSecondSquared = .2;
         
         // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
         public static final double kRamseteB = 2;
         public static final double kRamseteZeta = 0.7;
 
-        public static final int kEncoderCPR = 4096;
+        public static final int kEncoderCPR = 360;
         public static final double kWheelDiameterMeters = 0.0762;
         public static final double kEncoderDistancePerPulse =
         // Assumes the encoders are directly mounted on the wheel shafts

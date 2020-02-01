@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import java.lang.Math;
@@ -62,6 +63,7 @@ public class Drivetrain extends SubsystemBase {
         } */
 
         resetEncoders();
+        //m_gyro.setYaw(0);
 
         m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
@@ -103,6 +105,7 @@ public class Drivetrain extends SubsystemBase {
     * @return The pose.
     */
     public Pose2d getPose() {
+        
         return m_odometry.getPoseMeters();
     }
 
@@ -114,7 +117,7 @@ public class Drivetrain extends SubsystemBase {
     */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         m_leftMotors.setVoltage(leftVolts);
-        m_rightMotors.setVoltage(-rightVolts);
+        m_rightMotors.setVoltage(rightVolts);
         m_drive.feed();
     }
 
@@ -126,36 +129,28 @@ public class Drivetrain extends SubsystemBase {
         rightEncoder.setPosition(0);
     }
 
-    /*
-    public void initDefaultCommand() {
-        setDefaultCommand(new JoystickDrive());
-    }
-    */
+  
 
-    /* public void arcadeDrive(double joystickX, double joystickY)
-    {
-        //Apply raw motor values from joysticks
-        double leftPower = joystickX + joystickY;
-        double rightPower = joystickY - joystickX;
+  /**
+   * Sets the max output of the drive.  Useful for scaling the drive to drive more slowly.
+   *
+   * @param maxOutput the maximum output to which the drive will be constrained
+   */
+  public void setMaxOutput(double maxOutput) {
+    m_drive.setMaxOutput(maxOutput);
+  }
 
-        // Square drive
-        leftPower*=Math.abs(leftPower);
-        rightPower*=Math.abs(rightPower);
+  /**
+   * Zeroes the heading of the robot.
+   */
+  public void zeroHeading() {
+    m_gyro.setYaw(0);
+  }
 
-        //80% of total motor power
-        leftPower *= 0.8;
-        rightPower *= 0.8;
+  
 
-        //Set power to motors
-        setLeftPower(leftPower);
-        setRightPower(rightPower);
-    } */
-    /* public void setLeftPower (double power) {
-        for (WPI_TalonSRX leftMotor : leftMotors)
-            leftMotor.set(power);
-    }
-    public void setRightPower (double power) {
-        for (WPI_TalonSRX rightMotor : rightMotors)
-            rightMotor.set(power);
-    } */
+
+   
+
+
 }

@@ -29,7 +29,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class RobotContainer {
     // The robot's subsystems
-    private final Drivetrain m_robotDrive = new Drivetrain();
+    public final Drivetrain m_robotDrive = new Drivetrain();
 
     // The driver's controller
     /**
@@ -68,9 +68,12 @@ public class RobotContainer {
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
 
+        m_robotDrive.resetEncoders();
+        m_robotDrive.zeroHeading();
     // An example trajectory to follow.  All units in meters.
     Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
         // Start at the origin facing the +X direction
+       
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
         List.of(

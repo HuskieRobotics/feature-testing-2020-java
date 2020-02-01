@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //Initialize subsystems
     //_coder = new CANCoder(12);
+    m_robotContainer = new RobotContainer();
     drivetrain = new Drivetrain();
     //dShifter = new DogShifter();
     oi = new OI(); // MAKE SURE TO PUT THIS LAST
@@ -76,6 +77,7 @@ public class Robot extends TimedRobot {
     // commands, running already-scheduled commands, removing finished or interrupted commands,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
+    SmartDashboard.putString("Pose", m_robotContainer.m_robotDrive.getPose().toString());
     CommandScheduler.getInstance().run();
   }
 

@@ -42,6 +42,8 @@ public class DriveSubsystem extends SubsystemBase {
       new SpeedControllerGroup(new WPI_TalonSRX(2),
                                new WPI_TalonSRX(3),
                                new WPI_TalonSRX(4));
+
+  
   // The robot's drive
   private final DifferentialDrive m_drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
 
@@ -71,7 +73,7 @@ public class DriveSubsystem extends SubsystemBase {
     // Sets the distance per pulse for the encoders
     //m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
     //m_rightEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
-
+    m_leftMotors.setInverted(true);
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
   }
@@ -83,6 +85,16 @@ public class DriveSubsystem extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(getHeading()), 
                       m_leftEncoder.getPosition()*DriveConstants.kEncoderDistancePerPulse,
                       -m_rightEncoder.getPosition()*DriveConstants.kEncoderDistancePerPulse);
+    String leftTest = " " + (m_leftEncoder.getPosition()*DriveConstants.kEncoderDistancePerPulse);
+    String rightTest = " " + (-m_rightEncoder.getPosition()*DriveConstants.kEncoderDistancePerPulse);
+    SmartDashboard.putString("Left Encoder", leftTest);
+    SmartDashboard.putString("Right Encoder", rightTest);
+
+  }
+
+  public void setPower (double power) {
+    m_rightMotors.set(power);
+    m_leftMotors.set(power);
   }
 
   /**
@@ -132,7 +144,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void tankDriveVolts(double leftVolts, double rightVolts) {
     m_leftMotors.setVoltage(leftVolts);
-    m_rightMotors.setVoltage(-rightVolts);
+    m_rightMotors.setVoltage(rightVolts);
   }
 
   /**

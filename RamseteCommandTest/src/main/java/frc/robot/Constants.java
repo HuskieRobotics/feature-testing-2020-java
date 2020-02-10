@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 public final class Constants {
   public static final class DriveConstants {
 
-    public static final double kTrackwidthMeters = .7014113334078461;
+    public static final double kTrackwidthMeters = 0.7192451227442692;
     public static final DifferentialDriveKinematics kDriveKinematics =
         new DifferentialDriveKinematics(kTrackwidthMeters);
 
@@ -37,12 +37,12 @@ public final class Constants {
     // for *your* robot's drive.
     // The Robot Characterization Toolsuite provides a convenient tool for obtaining these
     // values for your robot.
-    public static final double ksVolts = 0.846;
-    public static final double kvVoltSecondsPerMeter = .209;
-    public static final double kaVoltSecondsSquaredPerMeter = 0.0376;
+    public static final double ksVolts = 0.707;
+    public static final double kvVoltSecondsPerMeter = 0.206;
+    public static final double kaVoltSecondsSquaredPerMeter = 0.0394;
 
     // Example value only - as above, this must be tuned for your drive!
-    public static final double kPDriveVel = 7;
+    public static final double kPDriveVel = 7.11;
   }
 
   public static final class OIConstants {

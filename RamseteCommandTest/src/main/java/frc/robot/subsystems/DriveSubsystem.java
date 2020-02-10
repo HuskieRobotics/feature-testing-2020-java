@@ -8,6 +8,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
+
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.CAN;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.Encoder;
@@ -69,6 +72,9 @@ public class DriveSubsystem extends SubsystemBase {
   /**
    * Creates a new DriveSubsystem.
    */
+  NetworkTableEntry m_xEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("X");
+  NetworkTableEntry m_yEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("Y");
+
   public DriveSubsystem() {
     // Sets the distance per pulse for the encoders
     //m_leftEncoder.setDistancePerPulse(DriveConstants.kEncoderDistancePerPulse);
@@ -76,6 +82,9 @@ public class DriveSubsystem extends SubsystemBase {
     m_leftMotors.setInverted(true);
     resetEncoders();
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+  
+    
+    
   }
 
   @Override
@@ -89,6 +98,12 @@ public class DriveSubsystem extends SubsystemBase {
     String rightTest = " " + (-m_rightEncoder.getPosition()*DriveConstants.kEncoderDistancePerPulse);
     SmartDashboard.putString("Left Encoder", leftTest);
     SmartDashboard.putString("Right Encoder", rightTest);
+
+    var translation = m_odometry.getPoseMeters().getTranslation();
+    m_xEntry.setNumber(translation.getX());
+    m_yEntry.setNumber(translation.getY());
+
+    
 
   }
 

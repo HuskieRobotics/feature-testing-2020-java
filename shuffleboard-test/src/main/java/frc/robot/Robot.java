@@ -45,8 +45,10 @@ public class Robot extends TimedRobot {
     ds = DriverStation.getInstance();
 
     camera1 = CameraServer.getInstance();
+    camera1.startAutomaticCapture(0);
     camera2 = CameraServer.getInstance();
-    
+    camera2.startAutomaticCapture(1);
+    /*
     UsbCamera usb1 = new UsbCamera("usb1", 0);
     //sink = CameraServer.getInstance().getVideo(usb1);
     //source = CameraServer.getInstance().putVideo("Test", 320, 240);
@@ -59,8 +61,9 @@ public class Robot extends TimedRobot {
     usb2.setResolution(320,240);
     //usb2.setBrightness(100);
     usb2.setPixelFormat(PixelFormat.kMJPEG);
+
     usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    
+    */
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();

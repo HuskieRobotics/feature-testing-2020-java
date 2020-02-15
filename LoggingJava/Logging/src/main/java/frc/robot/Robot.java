@@ -6,15 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
+import edu.wpi.first.wpilibj.AnalogInput;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import edu.wpi.first.wpilibj.AnalogInput;
-
-import java.util.Date;
-import java.sql.Timestamp;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -30,20 +26,16 @@ public class Robot extends TimedRobot {
   private File log;
   private FileWriter writer;
   private BufferedWriter bwriter;
-  private AnalogInput analogIn;
-  private Date date;
-  private Timestamp ts;
-
+  private AnalogInput pressureSensor;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
-    AnalogInput analogIn = new AnalogInput(0);
-    Date date = new Date();
+    pressureSensor = new AnalogInput(0);
     try {
-      this.log = new File("/home/lvuser/logfiles/log1.txt");
+      this.log = new File("/home/lvuser/logfiles/log.txt");
       if(!this.log.exists()) {
         this.log.createNewFile();
       }
@@ -51,8 +43,9 @@ public class Robot extends TimedRobot {
         this.bwriter = new BufferedWriter(this.writer);
     }
     catch(IOException e) {
-      //TODO Make this so that code does not break if logging doesn't work
+       System.out.println("Error." + e );
     }
+    
   }
 
   /**
@@ -65,12 +58,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    try{
-      ts = new Timestamp(date.getTime());
-      this.bwriter.write(ts.toString() + " - " + analogIn.getValue() + "\n");
+    try{ 
+      this.bwriter.write("Pressure Flow: " + pressureSensor.getValue());
     }
     catch(IOException e) {
-      
+       //this.bwriter.write("Oops! Something went wrong.");
     }
   }
 
@@ -87,6 +79,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+      
   }
 
   /**

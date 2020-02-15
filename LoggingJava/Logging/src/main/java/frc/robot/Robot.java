@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -13,6 +14,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 /**
@@ -64,6 +66,7 @@ public class Robot extends TimedRobot {
     catch(IOException e) {
        //this.bwriter.write("Oops! Something went wrong.");
     }
+    SmartDashboard.putNumber("pressure", pressureSensor.getValue());
   }
 
   /**

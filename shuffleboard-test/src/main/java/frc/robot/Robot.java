@@ -6,12 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
+//import edu.wpi.cscore.CvSink;
+//import edu.wpi.cscore.CvSource;
+//import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
-import edu.wpi.cscore.VideoSource.ConnectionStrategy;
+//import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -43,30 +43,50 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     ds = DriverStation.getInstance();
-
+    
+ 
     camera1 = CameraServer.getInstance();
-    UsbCamera usb1 = new UsbCamera("front camera", 0);
+    UsbCamera usb1 = new UsbCamera("front camera",0);
     usb1.setFPS(30);
     usb1.setResolution(160,120);
-    usb1.setPixelFormat(PixelFormat.kMJPEG);
+    usb1.setPixelFormat(PixelFormat.kYUYV);
     camera1.startAutomaticCapture(usb1);
     camera2 = CameraServer.getInstance();
 
     UsbCamera usb2 = new UsbCamera("back camera", 1);
     usb2.setFPS(30);
     usb2.setResolution(160,120);
-    usb2.setPixelFormat(PixelFormat.kMJPEG);
+    usb2.setPixelFormat(PixelFormat.kYUYV);
     camera2.startAutomaticCapture(usb2);
+   /*
+    UsbCamera usb1 = new UsbCamera("test", 1);
+    MjpegServer mjpegServer1 = new MjpegServer("serve_usb Camera 0 ", 1181);
+    mjpegServer1.setSource(usb1);
+    mjpegServer1.setResolution(160, 120);
+
+    CvSink cvSink = new CvSink("opencv_USB Camera 0");
+    cvSink.setSource(usb1); 
+     
+    CvSource outputStream = new CvSource("Blur", PixelFormat.kMJPEG, 160, 120, 30);
+    MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182);
+    mjpegServer2.setSource(outputStream);
+
+
+    cvSink.close();
+    mjpegServer1.close();
+    mjpegServer2.close();*/
     /*
     UsbCamera usb1 = new UsbCamera("usb1", 0);
-    //sink = CameraServer.getInstance().getVideo(usb1);
-    //source = CameraServer.getInstance().putVideo("Test", 320, 240);
+    sink = CameraServer.getInstance().getVideo(usb1);
+    source = CameraServer.getInstance().putVideo("Test", 320, 240);
     
     usb1.setResolution(320,240);
     //usb1.setBrightness(100);
     usb1.setPixelFormat(PixelFormat.kMJPEG);
     usb1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     UsbCamera usb2 =camera2.startAutomaticCapture(1);
+
+    
     usb2.setResolution(320,240);
     //usb2.setBrightness(100);
     usb2.setPixelFormat(PixelFormat.kMJPEG);
@@ -143,7 +163,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    if(ds.getMatchTime()<=30) camera2.startAutomaticCapture(2);
+   // if(ds.getMatchTime()<=30) camera2.startAutomaticCapture(2);
   }
 
   @Override

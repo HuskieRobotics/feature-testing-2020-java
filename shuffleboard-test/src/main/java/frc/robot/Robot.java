@@ -12,7 +12,9 @@ import edu.wpi.cscore.AxisCamera;
 //import edu.wpi.cscore.CvSource;
 //import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -20,6 +22,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -35,6 +38,11 @@ public class Robot extends TimedRobot {
   CameraServer camera1;
   CameraServer camera2;
   CameraServer camera3;
+  UsbCamera usb1;
+  UsbCamera usb2;
+  AxisCamera limelight;
+  VideoSink server;
+  Joystick joy = new Joystick(0);
   DriverStation ds;
   private Command m_autonomousCommand;
 
@@ -53,24 +61,29 @@ public class Robot extends TimedRobot {
     
  
     camera1 = CameraServer.getInstance();
-    UsbCamera usb1 = new UsbCamera("front camera",0);
+     usb1 = new UsbCamera("front camera",0);
     usb1.setFPS(30);
     usb1.setResolution(160,120);
     usb1.setPixelFormat(PixelFormat.kYUYV);
     camera1.startAutomaticCapture(usb1);
     camera2 = CameraServer.getInstance();
 
-    UsbCamera usb2 = new UsbCamera("back camera", 1);
+    usb2 = new UsbCamera("back camera", 1);
     usb2.setFPS(30);
     usb2.setResolution(160,120);
     usb2.setPixelFormat(PixelFormat.kYUYV);
     camera2.startAutomaticCapture(usb2);
      
     camera3= CameraServer.getInstance();
-    AxisCamera limelight = new AxisCamera("lime camera", "limelight:5800");
-    
+     limelight = new AxisCamera("lime camera", "limelight:5800");
+
     camera3.startAutomaticCapture(limelight);
-    
+    server = CameraServer.getInstance().getServer();
+
+    usb1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    limelight.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+
    /*
     UsbCamera usb1 = new UsbCamera("test", 1);
     MjpegServer mjpegServer1 = new MjpegServer("serve_usb Camera 0 ", 1181);
@@ -177,6 +190,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
    // if(ds.getMatchTime()<=30) camera2.startAutomaticCapture(2);
+   if (joy.getTriggerPressed()){
+     System.out.println("Setting camera 2");
+     server.setSource(usb2);
+   } else if (joy.getTriggerReleased()){
+    System.out.println("Setting the LimeLite");
+    server.setSource(limelight);
+  }
   }
 
   @Override

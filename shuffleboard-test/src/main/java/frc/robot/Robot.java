@@ -6,11 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
+
+import edu.wpi.cscore.AxisCamera;
 //import edu.wpi.cscore.CvSink;
 //import edu.wpi.cscore.CvSource;
 //import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoMode.PixelFormat;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 //import edu.wpi.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -28,6 +34,7 @@ public class Robot extends TimedRobot {
 
   CameraServer camera1;
   CameraServer camera2;
+  CameraServer camera3;
   DriverStation ds;
   private Command m_autonomousCommand;
 
@@ -58,6 +65,12 @@ public class Robot extends TimedRobot {
     usb2.setResolution(160,120);
     usb2.setPixelFormat(PixelFormat.kYUYV);
     camera2.startAutomaticCapture(usb2);
+     
+    camera3= CameraServer.getInstance();
+    AxisCamera limelight = new AxisCamera("lime camera", "limelight:5800");
+    
+    camera3.startAutomaticCapture(limelight);
+    
    /*
     UsbCamera usb1 = new UsbCamera("test", 1);
     MjpegServer mjpegServer1 = new MjpegServer("serve_usb Camera 0 ", 1181);
@@ -97,7 +110,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
   }
-
+  
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.

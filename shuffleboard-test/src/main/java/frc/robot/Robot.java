@@ -89,41 +89,9 @@ public class Robot extends TimedRobot {
     usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     limelight.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
 
-   /*
-    UsbCamera usb1 = new UsbCamera("test", 1);
-    MjpegServer mjpegServer1 = new MjpegServer("serve_usb Camera 0 ", 1181);
-    mjpegServer1.setSource(usb1);
-    mjpegServer1.setResolution(160, 120);
-
-    CvSink cvSink = new CvSink("opencv_USB Camera 0");
-    cvSink.setSource(usb1); 
-     
-    CvSource outputStream = new CvSource("Blur", PixelFormat.kMJPEG, 160, 120, 30);
-    MjpegServer mjpegServer2 = new MjpegServer("serve_Blur", 1182);
-    mjpegServer2.setSource(outputStream);
-
-
-    cvSink.close();
-    mjpegServer1.close();
-    mjpegServer2.close();*/
-    /*
-    UsbCamera usb1 = new UsbCamera("usb1", 0);
-    sink = CameraServer.getInstance().getVideo(usb1);
-    source = CameraServer.getInstance().putVideo("Test", 320, 240);
+   
+   
     
-    usb1.setResolution(320,240);
-    //usb1.setBrightness(100);
-    usb1.setPixelFormat(PixelFormat.kMJPEG);
-    usb1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    UsbCamera usb2 =camera2.startAutomaticCapture(1);
-
-    
-    usb2.setResolution(320,240);
-    //usb2.setBrightness(100);
-    usb2.setPixelFormat(PixelFormat.kMJPEG);
-
-    usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    */
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();

@@ -26,8 +26,10 @@ public class Robot extends TimedRobot {
   private Compressor compressor = new Compressor(21);
   private TalonFX motor1 = new TalonFX (1);
   private TalonFX motor2 = new TalonFX (2);
+  private TalonFX motor3 = new TalonFX(0);
   private double motor1Power = 0;
   private double motor2Power = 0;
+  private double motor3Power = 0;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -36,6 +38,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     SmartDashboard.putNumber("Motor 1 Power", 0);
     SmartDashboard.putNumber("Motor 2 Power", 0);
+    SmartDashboard.putNumber("Motor 3 Power",0);
   }
 
   
@@ -43,6 +46,8 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     motor1Power = SmartDashboard.getNumber("Motor 1 Power", 0);
     motor2Power = SmartDashboard.getNumber("Motor 2 Power", 0);
+
+    motor3Power = SmartDashboard.getNumber("Motor 3 Power", 0);
   }
 
  
@@ -68,6 +73,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     motor1.set(ControlMode.PercentOutput, motor1Power);
     motor2.set(ControlMode.PercentOutput, motor2Power);
+
+    motor3.set(ControlMode.PercentOutput, motor3Power);
   }
 
 

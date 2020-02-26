@@ -24,9 +24,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
   private Compressor compressor = new Compressor(21);
-  private TalonFX motor1 = new TalonFX (1);
-  private TalonFX motor2 = new TalonFX (2);
-  private TalonFX motor3 = new TalonFX(0);
+  private TalonFX motor1 = new TalonFX (13);
+  private TalonFX motor2 = new TalonFX (14);
+  private TalonFX motor3 = new TalonFX(15);
   private double motor1Power = 0;
   private double motor2Power = 0;
   private double motor3Power = 0;

@@ -34,10 +34,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  * project.
  */
 public class Robot extends TimedRobot {
-
-  CameraServer camera1;
-  CameraServer camera2;
-  CameraServer camera3;
   UsbCamera usb1;
   UsbCamera usb2;
   AxisCamera limelight;
@@ -59,38 +55,33 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     ds = DriverStation.getInstance();
     
-    // these variables seem to do nothing, but I am somehow unable to delete them without front camera from not displaying?
-    camera1 = CameraServer.getInstance();
-    camera2 = CameraServer.getInstance();
-    camera3= CameraServer.getInstance();
+    CameraServer.getInstance();
+    // Whoever is testing this code, if it works, then pls change these variable names to avoid further confusion with variable names and ports:
+    // usb1 to usb0
+    // usb2 to usb1
 
-    // usb 1
+    // usb 0
      usb1 = new UsbCamera("front camera",0);
     usb1.setFPS(30);
     usb1.setResolution(160,120);
     usb1.setPixelFormat(PixelFormat.kYUYV);
+    usb1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
     CameraServer.getInstance().startAutomaticCapture(usb1);
     
-    // usb 2
+    
+    // usb 1
     usb2 = new UsbCamera("back camera", 1);
     usb2.setFPS(30);
     usb2.setResolution(160,120);
     usb2.setPixelFormat(PixelFormat.kYUYV);
-    CameraServer.getInstance().startAutomaticCapture(usb2);
-     
+    usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
+    server = CameraServer.getInstance().startAutomaticCapture(usb2);
+
+
     // limelight
      limelight = new AxisCamera("lime camera", "limelight:5800");
+     limelight.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
      CameraServer.getInstance().startAutomaticCapture(limelight);
-     
-    server = CameraServer.getInstance().getServer();
-
-    // delete this if there are bandwidth issues (deleting these may cause delays in switching tho)
-    usb1.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    usb2.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-    limelight.setConnectionStrategy(ConnectionStrategy.kKeepOpen);
-
-   
-   
     
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
@@ -162,6 +153,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+  
    // if(ds.getMatchTime()<=30) camera2.startAutomaticCapture(2);
 
    // camera switching code

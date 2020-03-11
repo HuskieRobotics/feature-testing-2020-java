@@ -29,4 +29,18 @@ public final class Constants {
 
         
     }
+    public static final class StorageConstants {
+        public static final int storageMotor1CanID = 5;
+        public static final int storageMotor2CanID = 6;
+        public static final int bottomSensorChannel = 0;
+        public static final int topSensorChannel = 1;
+
+        public static final double storageFastSpeed = .4;
+        public static final double storageSlowSpeed = .2;
+        public static final double storageDelay = .2;
+        public static final int cycleLength = 20691;
+
+        public static final double manualStorageSpeed = .5; 
+        
+    }
 }

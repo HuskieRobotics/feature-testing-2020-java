@@ -6,7 +6,7 @@ public final class Constants {
         public static final int shooterMotor2CanID = 11;
 
         public static double shootingSpeed = 1;
-        public static double kP = 0;
+        public static double kP = 1;
         public static double kI = 0;
         public static double kD = 0;
 

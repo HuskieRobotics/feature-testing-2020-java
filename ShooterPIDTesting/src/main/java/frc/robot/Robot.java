@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    SmartDashboard.putNumber("P", 0);
+    SmartDashboard.putNumber("P", 1);
     SmartDashboard.putNumber("I", 0);
     SmartDashboard.putNumber("D", 0);
     SmartDashboard.putNumber("Target RPS", 4000);
@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotPeriodic() {
-    ShooterConstants.kP = SmartDashboard.getNumber("P", 0);
+    ShooterConstants.kP = SmartDashboard.getNumber("P", 1);
     ShooterConstants.kI = SmartDashboard.getNumber("I", 0);
     ShooterConstants.kD = SmartDashboard.getNumber("D", 0);
     ShooterConstants.kShooterTargetRPS = SmartDashboard.getNumber("Target RPS", 4000);
